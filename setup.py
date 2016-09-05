@@ -11,7 +11,7 @@ setup(
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Information Technology',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.5',
     ],
     keywords='rcnn',
     packages=find_packages(),

@@ -2,7 +2,7 @@
 import skimage.data
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-import selectivesearch
+from selectivesearch import selectivesearch
 
 
 def main():
@@ -32,7 +32,7 @@ def main():
     fig, ax = plt.subplots(ncols=1, nrows=1, figsize=(6, 6))
     ax.imshow(img)
     for x, y, w, h in candidates:
-        print x, y, w, h
+        print(x, y, w, h)
         rect = mpatches.Rectangle(
             (x, y), w, h, fill=False, edgecolor='red', linewidth=1)
         ax.add_patch(rect)

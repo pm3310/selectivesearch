@@ -1,12 +1,7 @@
 # Selective Search Implementation for Python
 
-This is a simple Selective Search Implementation for Python
-
-## Install
-
-```
-$ pip install selectivesearch
-```
+This is a simple Selective Search Implementation for Python 3.5. It is forked at the moment but I'll
+make it compatible for Python 2.7 and 3.5 version in the near future.
 
 ## Usage
 
@@ -14,7 +9,7 @@ It is super-simple.
 
 ```python
 import skimage.data
-import selectivesearch
+from selectivesearch import selectivesearch
 
 img = skimage.data.astronaut()
 img_lbl, regions = selectivesearch.selective_search(img, scale=500, sigma=0.9, min_size=10)

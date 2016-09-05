@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+import math
+
 import skimage.io
 import skimage.feature
 import skimage.color
@@ -72,11 +73,8 @@ def _calc_sim(r1, r2, imsize):
 def _calc_colour_hist(img):
     """
         calculate colour histogram for each region
-
         the size of output histogram will be BINS * COLOUR_CHANNELS(3)
-
         number of bins is 25 as same as [uijlings_ijcv2013_draft.pdf]
-
         extract HSV
     """
 
@@ -101,10 +99,8 @@ def _calc_colour_hist(img):
 def _calc_texture_gradient(img):
     """
         calculate texture gradient for entire image
-
         The original SelectiveSearch algorithm proposed Gaussian derivative
         for 8 orientations, but we use LBP instead.
-
         output will be [height(*)][width(*)]
     """
     ret = numpy.zeros((img.shape[0], img.shape[1], img.shape[2]))
@@ -119,7 +115,6 @@ def _calc_texture_gradient(img):
 def _calc_texture_hist(img):
     """
         calculate texture histogram for each region
-
         calculate the histogram of gradient for each colours
         the size of output histogram will be
             BINS * ORIENTATIONS * COLOUR_CHANNELS(3)
@@ -203,7 +198,7 @@ def _extract_neighbours(regions):
             return True
         return False
 
-    R = regions.items()
+    R = list(regions.items())
     neighbours = []
     for cur, a in enumerate(R[:-1]):
         for b in R[cur + 1:]:
@@ -232,8 +227,7 @@ def _merge_regions(r1, r2):
 
 def selective_search(
         im_orig, scale=1.0, sigma=0.8, min_size=50):
-    '''Selective Search
-
+    """Selective Search
     Parameters
     ----------
         im_orig : ndarray
@@ -257,7 +251,7 @@ def selective_search(
                 },
                 ...
             ]
-    '''
+    """
     assert im_orig.shape[2] == 3, "3ch image is expected"
 
     # load image and get smallest regions
@@ -282,7 +276,7 @@ def selective_search(
     while S != {}:
 
         # get highest similarity
-        i, j = sorted(S.items(), cmp=lambda a, b: cmp(a[1], b[1]))[-1][0]
+        i, j = sorted(S.items(), key=lambda x: x[1], reverse=True)[-1][0]
 
         # merge corresponding regions
         t = max(R.keys()) + 1.0
@@ -308,7 +302,8 @@ def selective_search(
         regions.append({
             'rect': (
                 r['min_x'], r['min_y'],
-                r['max_x'] - r['min_x'], r['max_y'] - r['min_y']),
+                r['max_x'] - r['min_x'], r['max_y'] - r['min_y']
+            ),
             'size': r['size'],
             'labels': r['labels']
         })
